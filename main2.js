@@ -1,7 +1,6 @@
 //----------------------------------------------------------Create cards-------------------------------------------
 
-function CreateCards (array) {
-     
+function CreateCards (array) {     
     for (let i = 0; i < array.length; i++) {
         const cardsDiv = document.getElementById("cards-container");
         const card = document.createElement("div");
