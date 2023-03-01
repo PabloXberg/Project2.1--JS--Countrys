@@ -1,5 +1,22 @@
 //----------------------------------------------------------Create cards-------------------------------------------
 
+function getCountries () {
+    fetch("https://restcountries.com/v3.1/all")
+    .then(function(response) {
+      console.log("response: ", response);
+      return response.json();
+    })
+    .then(function(result) {
+      console.log("result: ", result);
+      CreateCards(result);
+    })
+    .catch(function(error) {
+      console.log(error)
+      alert(error);
+    })
+  }
+getCountries();
+
 function CreateCards (array) {     
     for (let i = 0; i < array.length; i++) {
         const cardsDiv = document.getElementById("cards-container");
@@ -10,7 +27,7 @@ function CreateCards (array) {
         cardsDiv.appendChild(card);
         const img = document.createElement("img");
         img.setAttribute("src", array[i].flags.png);
-        img.setAttribute("alt", AllCountries[i].flags.alt);
+        img.setAttribute("alt", array[i].flags.alt);
         const cardBody = document.createElement("div");
         cardBody.classList.add("card-body");
         card.append(img, cardBody);
@@ -35,8 +52,8 @@ function CreateCards (array) {
                 const list = document.createElement ("ul");
                 const cardlenguage = document.createElement("li");
                 const cardpop = document.createElement("li");
-                cardlenguage.innerHTML = AllCountries[i].languages.toString();
-                cardpop.innerHTML = AllCountries[i].population;
+                cardlenguage.innerHTML = array[i].languages.toString();
+                cardpop.innerHTML = array[i].population;
                 list.classlist = ("list-group list-group-flush");
                 cardlenguage.classList = ("list-group-item");
                 cardpop.classList = ("list-group-item");
@@ -58,5 +75,5 @@ function CreateCards (array) {
     }
   }
   
-  CreateCards(AllCountries);
+
 
