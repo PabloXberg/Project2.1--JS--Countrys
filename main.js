@@ -1,23 +1,27 @@
-
 function getCountries () {
   fetch("https://restcountries.com/v3.1/all")
   .then(function(response) {
-    console.log("response: ", response);
+    // console.log("response: ", response);
     return response.json();
   })
   .then(function(result) {
-    console.log("result: ", result);
+    // console.log("result: ", result);
     // buildTable(result);
-   buildWithForEach(result);
+    const region = checked();
+    console.log (region);
+    // ShowTable(result, region);
     // mapExampleFunction(result);
     // findBorderBRAincludes(result);
     // findBorderBRAfilter(result);
   })
   .catch(function(error) {
-    console.log(error)
+    console.log(error);
+    alert(error);
   })
 }
 getCountries();
+
+
 
 
 
@@ -66,10 +70,13 @@ getCountries();
 //   }
 // }
 
-const buildWithForEach = (countries) => {
+const ShowTable = (countries, region) => {
   const table = document.querySelector("tbody");
+  table.innerHTML = "";
   countries.forEach((country) => {
-    
+     
+    console.log("countries:", countries[1].region);
+
     const row = document.createElement("tr");
     table.appendChild(row);
     const nameCell = document.createElement("td");
@@ -96,8 +103,9 @@ const buildWithForEach = (countries) => {
     linkCell.appendChild(link)
 
     row.append(nameCell, aufDeuCell, popCell, capitalCell, flagCell, linkCell);
-  })
-}
+    })
+  }
+
 
 // const mapExampleFunction = (countries) => {
 //   const mapResult = countries.map((country, i) => {

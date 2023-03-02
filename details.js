@@ -4,7 +4,7 @@ let params = (new URL(document.location)).searchParams;
 let name = params.get('name');
 console.log(name);
 
-fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
+const PAIS = fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
 .then((res) => res.json())
 .then((res) => {
   console.log(res);
