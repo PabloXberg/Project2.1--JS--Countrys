@@ -1,7 +1,7 @@
 console.log("testing")
 
 let params = (new URL(document.location)).searchParams;
-let name = params.get('name');
+const name = params.get('name');
 console.log(name);
 
 const PAIS = fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
@@ -12,3 +12,10 @@ const PAIS = fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
   console.log("fetched country: ", fetchedCountry);
 })
 .catch((err) => console.log(err));
+
+
+
+const divheader = document.getElementById("header-div")
+const header = document.getElementById("detailsheader");
+header.innerHTML = `Detalles sobre`, name;
+divheader.appendChild (header);

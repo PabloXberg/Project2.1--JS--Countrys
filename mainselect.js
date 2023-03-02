@@ -39,8 +39,7 @@ const RegionOptions = (countries) => {
 //--------------------------------------------------------------------------------------ESCUCHA LOS CAMBIOS DEL SELECT. REGIONES
   const addEventListeners = (countries) => {
     const RegionOptions = document.getElementById("Region");
-  
- 
+   
     RegionOptions.addEventListener("change", (event) => {
         
       // console.log(event.target.value);
@@ -49,17 +48,14 @@ const RegionOptions = (countries) => {
       } else {
         const filteredCountries = countries.filter((country) => {
         return country.region === event.target.value;
+       })
         
-        })
-        
-        console.log("filteredCountries: ", filteredCountries);
-        const subregiones = filteredCountries.map((subregion) =>{
- 
-    
-        })
-        console.log ("subregiones: ", subregiones)
-        // console.log(filteredGames);
-        buildTable(filteredCountries);
+        // console.log("filteredCountries: ", filteredCountries);
+        // const subregiones = filteredCountries.map((subregion) =>{
+        // })
+        // console.log ("subregiones: ", subregiones)
+
+          buildTable(filteredCountries);
     //    SubRegionOptions(subregiones)
       }
     })
