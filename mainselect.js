@@ -4,7 +4,7 @@ const fetchData = () => {
       return res.json()
     })
     .then((fetchResult) => {
-      console.log("fetch result: ", fetchResult);
+
       controllerFunction(fetchResult);
     })
     .catch((error) => console.log(error));
@@ -19,6 +19,7 @@ const controllerFunction = (countries) => {
       RegionOptions(countries);
       SubRegionOptions(countries)
       addEventListeners(countries);
+      addEventListeners2(countries);
     }
   
 
@@ -41,19 +42,19 @@ const RegionOptions = (countries) => {
 
   }
 const SubRegionOptions = (countries) => {
-  // console.log('countries :>> ', countries);
     const compsOptions = document.getElementById("SubRegion");
     compsOptions.textContent =""
     const compNames = countries.map((country) => {
       return country.subregion
     })
-    // console.log('compNames :>> ', compNames);
+    const option = document.createElement("option");
+    option.setAttribute("value", "all");
+    option.textContent = "Select...";
+    compsOptions.append(option);
     const set = new Set(compNames);
     const uniqueRegion = [...set];
-    console.log('uniqueRegion :>> ', uniqueRegion);
-
       uniqueRegion.forEach((country) => {
-        console.log('country :>> ', country);
+    
       const option = document.createElement("option");
       option.setAttribute("value", country);
       option.textContent = country;
@@ -66,8 +67,7 @@ const SubRegionOptions = (countries) => {
    
     RegionOptions.addEventListener("change", (event) => {
         filterByRegion(countries)
-      // console.log(event.target.value);
-     
+
     })
 }
 
@@ -86,47 +86,31 @@ const filterByRegion =(countries)=> {
 
   }
 }
+const filterBySubRegion =(countries)=> {
+  const selectedOption = document.getElementById("SubRegion").value;
 
-
-//   // ---------------------------------------------------------------------------------------CARGA LAS OPCIONES DEL SELECT DE LAS "SUBREGIONES"
-//   const SubRegionOptions = (regiones) => {
-//     const RegionOptions = document.getElementById("Region");
-//     const SubRegionOptions = document.getElementById("SubRegion");
-//     console.log("regiones:", regiones);
-//     const compNames = regiones.country.region.map((region) => {
-//     return region.subregion
-  
-
-//     })
-//     if ((RegionOptions.value !== "all") && (regiones.subregion === RegionOptions.value)){
+  if (selectedOption === "all") {
+    buildTable(countries)
+  } else {
+    const filteredCountries = countries.filter((country) => {
+    return country.subregion === selectedOption
+   })
     
+      buildTable(filteredCountries);
 
-//             const set = new Set(compNames);
-//             const uniqueComps = [...set];
-//             uniqueComps.forEach((subregion) => {
-//             const option = document.createElement("option");
-//             option.setAttribute("value", subregion);
-//             SubRegionOptions.append(option);
-//     }) 
-//     }
-//   }
+  }
+}
+
 //--------------------------------------------------------------------------------------ESCUCHA LOS CAMBIOS DEL SELECT. SUBREGIONES
 
-//   const addEventListenersforSub = (Regiones) => {
-//     const SubRegionOptions = document.getElementById("SubRegion");
-//     SubRegionOptions.addEventListener("change", (event) => {
-//       // console.log(event.target.value);
-//       if (event.target.value === "all") {
-//         buildTable(Regiones)
-//       } else {
-//         const FilteredRegiones = Regiones.filter((subregion) => {
-//           return subregion.subregion === event.target.value;
-//         })
-//         // console.log(filteredGames);
-//         buildTable(FilteredRegiones);
-//       }
-//     })
-// }
+const addEventListeners2 = (countries) => {
+  const SubRegionOptions = document.getElementById("SubRegion");
+ 
+    SubRegionOptions.addEventListener("change", (event) => {
+      filterBySubRegion(countries)
+   
+  })
+}
 
 
     // ---------------------------------------------------------------------------------------ARMA LA TABLA --------------------------------------------------
@@ -134,7 +118,7 @@ const filterByRegion =(countries)=> {
       const CountryTable = document.getElementById("countries-table");
       CountryTable.innerHTML = "";
       Countries.forEach((country) => {
-        console.log("Region:", Countries[1].region);
+
 
         const row = document.createElement("tr");
         CountryTable.appendChild(row);

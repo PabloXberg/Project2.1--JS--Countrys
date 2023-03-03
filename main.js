@@ -5,8 +5,6 @@ function getCountries () {
     return response.json();
   })
   .then(function(result) {
-    // console.log("result: ", result);
-    // console.log (region);
     ShowTable(result);
     search();
   })
