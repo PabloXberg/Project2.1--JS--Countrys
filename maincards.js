@@ -21,13 +21,14 @@ function CreateCards (array) {
     for (let i = 0; i < array.length; i++) {
         const cardsDiv = document.getElementById("cards-container");
         const card = document.createElement("div");
-        cardsDiv.classList.add("row", "row-cols-1", "row-cols-md-3", "g-4")
+        cardsDiv.classList.add("col", "row-cols-1", "row-cols-md-3", "g-4")
         card.classList.add("card", "col-lg");
         card.setAttribute("style", "width: 13rem;");
         cardsDiv.appendChild(card);
         const img = document.createElement("img");
         img.setAttribute("src", array[i].flags.png);
         img.setAttribute("alt", array[i].flags.alt);
+        img.setAttribute("style", "card-img-top");
         const cardBody = document.createElement("div");
         cardBody.classList.add("card-body");
         card.append(img, cardBody);
@@ -52,7 +53,8 @@ function CreateCards (array) {
                 const list = document.createElement ("ul");
                 const cardlenguage = document.createElement("li");
                 const cardpop = document.createElement("li");
-                cardlenguage.innerHTML = array[i].languages;
+                cardlenguage.innerHTML = array[i].language;
+              
                 cardpop.innerHTML = array[i].population;
                 list.classlist = ("list-group list-group-flush");
                 cardlenguage.classList = ("list-group-item");
@@ -69,7 +71,7 @@ function CreateCards (array) {
                 cardpopi.innerHTML = "";
                 cardBody.append (cardlenguages, cardpopi);
                 button.innerHTML = "Show More";
-              
+                        
             }
           });
     }

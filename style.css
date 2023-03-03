@@ -3,7 +3,7 @@ img {
   height: 4rem;
   width: auto;
 }
-
+/* 
 div{
     padding: 2em;
     width: auto;
@@ -14,11 +14,11 @@ border-top: 0;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-}
+} */
 
 #cards-container {
-   margin-top: 5vw;
-  column-gap: 2rem;
+   /* margin-top: 5vw; */
+  column-gap: 1rem;
   row-gap: 2rem;
   overflow: hidden;
   width: 80vw;
@@ -38,7 +38,7 @@ border-top: 0;
 } */
 
 #region{
-  padding-top: 7.5rem;
+  /* padding-top: 7.5rem; */
   width: 100%;
   text-align: center;
 }

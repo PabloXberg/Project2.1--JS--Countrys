@@ -49,7 +49,7 @@ const SubRegionOptions = (countries) => {
     })
     const option = document.createElement("option");
     option.setAttribute("value", "all");
-    option.textContent = "Select...";
+    option.textContent = "Select Subregion...";
     compsOptions.append(option);
     const set = new Set(compNames);
     const uniqueRegion = [...set];
@@ -148,3 +148,4 @@ const addEventListeners2 = (countries) => {
         row.append(nameCell, aufDeuCell, popCell, capitalCell, flagCell, linkCell);
         })
   }
+

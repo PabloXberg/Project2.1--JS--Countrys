@@ -10,34 +10,28 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar bg-dark navbar sticky-top bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">World´s Countries</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+      <a class="navbar-brand" href="#">The Country's Web</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menú</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">By Continent</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="select.html">By Region</a>
-            </li>
-               <li><a class="dropdown-item" href="cards.html">By Name</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="d-flex mt-3" role="search">
-            <input id="buscador" class="form-control me-2" type="search" placeholder="Search on me..." aria-label="Search">
-            <button class="btn btn-success" type="submit">Search</button>
-          </form>
-        </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">By Continent (Checkboxes)</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="select.html">By Region (Select)</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="cards.html">By Name (Cards)</a>
+              </li>
+  	    </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="buscador">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
       </div>
     </div>
   </nav>
