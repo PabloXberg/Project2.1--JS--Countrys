@@ -52,7 +52,7 @@ function CreateCards (array) {
                 const list = document.createElement ("ul");
                 const cardlenguage = document.createElement("li");
                 const cardpop = document.createElement("li");
-                cardlenguage.innerHTML = array[i].languages.toString();
+                cardlenguage.innerHTML = array[i].languages;
                 cardpop.innerHTML = array[i].population;
                 list.classlist = ("list-group list-group-flush");
                 cardlenguage.classList = ("list-group-item");

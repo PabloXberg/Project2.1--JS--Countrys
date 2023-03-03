@@ -7,8 +7,8 @@ function getCountries () {
   .then(function(result) {
     // console.log("result: ", result);
     // console.log (region);
-
     ShowTable(result);
+    search();
   })
   .catch(function(error) {
     console.log(error);
@@ -55,4 +55,29 @@ const ShowTable = (countries) => {
   }
 
 
+  const search = () => {
+    let city = "";
+    const searchInput = document.getElementById("buscador");
+      searchInput.addEventListener("input", (event) => {
+      console.log("event", event.target.value);
+      console.log("input event", event);
+      city = event.target.value;
+      console.log("city", city);
 
+    });
+    searchInput.addEventListener("keydown", (event) => {
+      console.log("key event", event);
+      if (event.key === "Enter") {
+        alert(city); // AL PRECIONAR ENTER; REDIRECCIONAR A details.html Y MOSTRAR DETALLES DEL PAIS
+        // console.log("do something");
+       // getWeatherByCity(city);
+      }
+    });
+  };
+  
+  // const cleanDOM = (city, tbody, astronomyCards) => {
+  //   city.innerHTML = "";
+  //   tbody.innerHTML = "";
+  //   astronomyCards.innerHTML = "";
+  //   document.getElementById("city-search").value = "";
+  // };

@@ -17,12 +17,14 @@ const fetchData = () => {
 const controllerFunction = (countries) => {
       buildTable(countries);
       RegionOptions(countries);
+      SubRegionOptions(countries)
       addEventListeners(countries);
     }
   
 
  // ---------------------------------------------------------------------------------------CARGA LAS OPCIONES DEL SELECT DE LAS "REGIONES"
 const RegionOptions = (countries) => {
+  
     const compsOptions = document.getElementById("Region");
     const compNames = countries.map((country) => {
       return country.region
@@ -35,30 +37,54 @@ const RegionOptions = (countries) => {
       option.innerHTML = country;
       compsOptions.append(option);
     })
+
+
+  }
+const SubRegionOptions = (countries) => {
+  // console.log('countries :>> ', countries);
+    const compsOptions = document.getElementById("SubRegion");
+    compsOptions.textContent =""
+    const compNames = countries.map((country) => {
+      return country.subregion
+    })
+    // console.log('compNames :>> ', compNames);
+    const set = new Set(compNames);
+    const uniqueRegion = [...set];
+    console.log('uniqueRegion :>> ', uniqueRegion);
+
+      uniqueRegion.forEach((country) => {
+        console.log('country :>> ', country);
+      const option = document.createElement("option");
+      option.setAttribute("value", country);
+      option.textContent = country;
+      compsOptions.append(option);
+    })
   }
 //--------------------------------------------------------------------------------------ESCUCHA LOS CAMBIOS DEL SELECT. REGIONES
   const addEventListeners = (countries) => {
     const RegionOptions = document.getElementById("Region");
    
     RegionOptions.addEventListener("change", (event) => {
-        
+        filterByRegion(countries)
       // console.log(event.target.value);
-      if (event.target.value === "all") {
-        buildTable(countries)
-      } else {
-        const filteredCountries = countries.filter((country) => {
-        return country.region === event.target.value;
-       })
-        
-        // console.log("filteredCountries: ", filteredCountries);
-        // const subregiones = filteredCountries.map((subregion) =>{
-        // })
-        // console.log ("subregiones: ", subregiones)
-
-          buildTable(filteredCountries);
-    //    SubRegionOptions(subregiones)
-      }
+     
     })
+}
+
+const filterByRegion =(countries)=> {
+  const selectedOption = document.getElementById("Region").value;
+
+  if (selectedOption === "all") {
+    buildTable(countries)
+  } else {
+    const filteredCountries = countries.filter((country) => {
+    return country.region === selectedOption
+   })
+    
+      buildTable(filteredCountries);
+      SubRegionOptions(filteredCountries)
+
+  }
 }
 
 
