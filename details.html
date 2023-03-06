@@ -28,10 +28,10 @@
                     <a class="nav-link" href="cards.html">By Name (Cards)</a>
                   </li>
               </ul>
-            <form class="d-flex" role="search">
+            <!-- <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="buscador">
               <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            </form> -->
           </div>
         </div>
       </nav>
@@ -40,12 +40,12 @@
           <div id="header-div">
             <div id="flag-div"></div>
             <div id="countryname-div">
-                <h1 id="countryname">Details</h1>
+                <h1 class="display-5" style="text-align: center;justify-content:space-around ;"id="countryname">Details</h1>
             </div>
             <div id = "escudo-div"></div>
           </div>
           <div id="main-div">
-            <table class="table table-striped table-hover table-dark table-borderless">
+            <table class="table table-hover table-dark table-borderless shadow" >
               <tbody>
                 <tr>
                   <th>Capital City</th>
@@ -60,19 +60,24 @@
 
             <div id ="astroweather-container">
               <div class="row justify-content-sm-center">
-                <div class="spinner-border" role="status" id="spinner">
+                <div class="spinner-border text-danger" role="status" id="spinner">
                   <span class="visually-hidden">Loading...</span>
                 </div>
                 <div class="invisible" id="data-to-display">
-                  <h3 id="city"></h3>
-                  <div id="astronomy-cards"></div>
-        
-                  <table class="table">
+                  <h3 class="h5" style="text-align: center;"id="city"></h3>
+                        
+                  <table class="table table-hover table-dark table-borderless shadow">
                     <thead>
                       <tr>
                         <th scope="col">Date</th>
-                        <th scope="col">Min Temperature</th>
-                        <th scope="col">Max Temperature</th>
+                        <th scope="col">Min Temp</th>
+                        <th scope="col">Max Temp</th>
+                        <th scope="col">Humedity</th>
+                        <th scope="col">Max Wind</th>
+                        <th scope="col">Sunshine</th>
+                        <th scope="col">Sunset</th>
+                        <th scope="col">Moonshine</th>
+                        <th scope="col">Moonset</th>
                         <th scope="col">Condition</th>
                       </tr>
                     </thead>

@@ -98,9 +98,9 @@ padding-top: 2rem;
 }
 #main-div {
   grid-area: main;
-  border: solid 1px white;
+  /* border: solid 1px white; */
 }
 #footer-div {
   grid-area: footer;
-  border: solid 1px white;
+  /* border: solid 1px white; */
 }

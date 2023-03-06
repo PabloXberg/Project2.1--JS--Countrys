@@ -13,13 +13,17 @@ return countryName
 }
 
 const fetchCountry =(countryName)=> {
+  console.log('countryName :>> ', countryName);
    fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
 .then((res) => res.json())
 .then((res) => {
   const fetchedCountry = res[0];
-  armarTabla(fetchedCountry)
+  console.log('fetchedCountry :>> ', fetchedCountry);
+   armarTabla(fetchedCountry)
+
 })
 .catch((err) => console.log(err));
+
 }
 
 
@@ -49,22 +53,18 @@ const armarTabla = (country)=> {
 
   const capital = document.createElement("td");
   capital.innerHTML = country.capital;
-  
-  const language = document.createElement("td");
+   const language = document.createElement("td");
   language.innerHTML = country.demonyms.eng.m;
   const population = document.createElement("td");
   population.innerHTML = country.population;
   const timezone = document.createElement("td");
   timezone.innerHTML = country.timezones;
-;
   const region = document.createElement("td");
   region.innerHTML = country.region;
-
   const subregion = document.createElement("td");
   subregion.innerHTML = country.subregion;
   row.append(capital, language, population, timezone, region, subregion);
   getWeatherByCity(capital);
-
   // const maindiv = document.getElementById("main-div");                                    tryed to put a googlemap, but didn't work, cause the API isn't good made...
   // const map = document.createElement("iframe");
   // const lati = country.latlng[0];
@@ -75,13 +75,11 @@ const armarTabla = (country)=> {
   // map.setAttribute("src",url );
   // console.log('url :>> ', url);
   // maindiv.append(map);
-
-}
+  }
 
 
 const getWeatherByCity = (city) => {
   // hide spinner
-
   const spinner = document.getElementById("spinner");
   spinner.classList.remove("invisible");
   //show table
@@ -90,17 +88,13 @@ const getWeatherByCity = (city) => {
 
   setTimeout(() => {
     const capital = city.innerText;
-    console.log('capital>> ', capital);
-    
     let urlAstronomy = `http://api.weatherapi.com/v1/astronomy.json?key=${API_KEY}&q=${capital}&dt=${new Date()}`;
     let urlForecast = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${capital}&days=5&aqi=no&alerts=no`;
-
     let urlsArray = [urlAstronomy, urlForecast];
 
     Promise.all(
       urlsArray.map((singleUrl) => {
         return fetch(singleUrl).then((singleResponse) => {
-          // console.log("singleResponse", singleResponse);
           return singleResponse.json();
         });
       })
@@ -108,8 +102,6 @@ const getWeatherByCity = (city) => {
       console.log("result", result);
       const astronomyData = result[0];
       const weatherData = result[1];
-      console.log('astronomyData :> ', astronomyData);
-console.log('weatherData :>> ', weatherData);
       displayData(weatherData, astronomyData);
       // addEvents();
     });
@@ -132,10 +124,10 @@ const displayData = (weatherData, astronomyData) => {
 
   const { forecast, location } = weatherData;
 
-  city.innerText = `Diplaying the weather for ${location.name} in ${location.country}`;
+  city.innerText = `Weather for ${location.name} in ${location.country}, for the next 5 days...`;
   const { astronomy } = astronomyData;
 
-  createAstronomyCards(astronomyCards, astronomy);
+  // createAstronomyCards(astronomyCards, astronomy);
   createTable(tbody, forecast);
 };
 
@@ -146,40 +138,34 @@ const createTable = (tbody, forecast) => {
     const td2 = document.createElement("td");
     const td3 = document.createElement("td");
     const td4 = document.createElement("td");
+    const td5 = document.createElement("td");
+    const td6 = document.createElement("td");
+    const td7 = document.createElement("td");
+    const td8 = document.createElement("td");
+    const td9 = document.createElement("td");
+    const td10 = document.createElement("img");
     td1.innerText = day.date;
-    td2.innerText = day.day.mintemp_c;
-    td3.innerText = day.day.maxtemp_c;
-    td4.innerText = day.day.condition.text;
+    td2.innerText = `${day.day.mintemp_c} °C`;
+    td3.innerText = `${day.day.maxtemp_c} °C`;
+    td4.innerText = `${day.day.avghumidity} %`;
+    td5.innerText =`${day.day.maxwind_kph} kph`;
+    td6.innerText = day.astro.sunrise;
+    td7.innerText = day.astro.sunset;
+    td8.innerText = day.astro.moonrise;
+    td9.innerText = day.astro.moonset;
+    td10.setAttribute("src", day.day.condition.icon)
     row.appendChild(td1);
     row.appendChild(td2);
     row.appendChild(td3);
     row.appendChild(td4);
+    row.appendChild(td5);
+    row.appendChild(td6);
+    row.appendChild(td7);
+    row.appendChild(td8);
+    row.appendChild(td9);
+    row.appendChild(td10);
     tbody.appendChild(row);
   });
-};
-
-const createAstronomyCards = (astronomyCards, astronomy) => {
-  const divSun = document.createElement("div");
-  divSun.setAttribute("class", "card ");
-  const divSunBody = document.createElement("div");
-  divSunBody.setAttribute("class", "card-body");
-  const h5Sun = document.createElement("h5");
-  h5Sun.setAttribute("class", "card-title");
-  h5Sun.innerText = "Sun";
-  const ulSun = document.createElement("ul");
-  ulSun.setAttribute("class", "list-group list-group-flush");
-  const ulSunRise = document.createElement("li");
-  ulSunRise.setAttribute("class", "list-group-item");
-  ulSunRise.innerText = `Sunrise is at ${astronomy.astro.sunrise}`;
-  const ulSunSet = document.createElement("li");
-  ulSunSet.setAttribute("class", "list-group-item");
-  ulSunSet.innerText = `Sunset is at ${astronomy.astro.sunset}`;
-  ulSun.appendChild(ulSunRise);
-  ulSun.appendChild(ulSunSet);
-  divSunBody.appendChild(h5Sun);
-  divSun.appendChild(divSunBody);
-  divSun.appendChild(ulSun);
-  astronomyCards.appendChild(divSun);
 };
 
 
@@ -189,3 +175,22 @@ const cleanDOM = (city, tbody, astronomyCards) => {
   astronomyCards.innerHTML = "";
   document.getElementById("city-search").value = "";
 };
+
+// const addEvents = () => {
+//   let city = "";
+//   const searchInput = document.getElementById("buscador");
+//   searchInput.addEventListener("input", (event) => {
+//     city = event.target.value;
+//     console.log("city", city);
+//   });
+//   searchInput.addEventListener("keydown", (event) => {
+//     console.log("key event", event);
+//     if (event.key === "Enter") {
+//       console.log("do something");
+//       console.log('city :>> ', city);
+//       fetchCountry(city);
+//       armarTabla(city);
+//       getWeatherByCity(city);
+//     }
+//   });
+// };
