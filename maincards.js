@@ -9,6 +9,7 @@ function getCountries () {
     .then(function(result) {
       console.log("result: ", result);
       CreateCards(result);
+        addEventListeners(result);
     })
     .catch(function(error) {
       console.log(error)
@@ -17,9 +18,12 @@ function getCountries () {
   }
 getCountries();
 
-function CreateCards (array) {     
+function CreateCards(array) {     
+  const cardsDiv = document.getElementById("cards-container");
+  cardsDiv.innerHTML = "";
+
     for (let i = 0; i < array.length; i++) {
-        const cardsDiv = document.getElementById("cards-container");
+
         const card = document.createElement("div");
         cardsDiv.classList.add("col", "row-cols-1", "row-cols-md-3", "g-4")
         card.classList.add("card", "col-lg");
@@ -78,4 +82,64 @@ function CreateCards (array) {
   }
   
 
+const addEventListeners = (countries) => {
+  // const subregionsOptions = document.getElementById("subregions");
 
+  // subregionsOptions.addEventListener("change", (e) => {
+  //   // console.log("region", e.target.value);
+  //   // filterBySubregion(countries);
+  //   // combinedFilters(countries);
+  //   displayTable(countries);
+  // });
+
+  // const regionsOptions = document.getElementById("regions");
+
+  // regionsOptions.addEventListener("change", (e) => {
+  //   // console.log("subregion", e.target.value);
+  //   // filterByRegion(countries);
+  //   // combinedFilters(countries);
+  //   displayTable(countries);
+  // });
+
+  const checkBoxes = document.querySelectorAll("input[type='checkbox']");
+  console.log("checkBoxes", checkBoxes);
+
+  checkBoxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", () => {
+      // console.log("working")
+      // combinedFilters(countries);
+
+      filterByCheckbox(countries)
+    });
+  });
+};
+
+
+
+const filterByCheckbox = (countries) => {
+  const checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
+
+  console.log("checkboxes inside FilterFunc", checkboxes);
+
+  const checkboxesValues = Array.from(checkboxes).map((checkbox) => {
+    return checkbox.value;
+  });
+  console.log("checkboxesValues", checkboxesValues);
+
+  const filteredCountries = countries.filter((country) => {
+    return (
+      checkboxesValues.includes(country.region) ||
+      checkboxesValues.length === 0
+    );
+  });
+  console.log('filteredCountries :>> ', filteredCountries);
+  CreateCards(filteredCountries);
+};
+
+
+// const cleanDOM = (city, tbody, astronomyCards) => {
+//   city.innerHTML = "";
+//   tbody.innerHTML = "";
+//   astronomyCards.innerHTML = "";
+//   document.getElementById("city-search").value = "";
+// };

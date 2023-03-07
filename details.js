@@ -176,6 +176,11 @@ const cleanDOM = (city, tbody, astronomyCards) => {
   document.getElementById("city-search").value = "";
 };
 
+
+
+
+//BUSCAR A TRAPES DEL INPUT TEXT
+
 // const addEvents = () => {
 //   let city = "";
 //   const searchInput = document.getElementById("buscador");
