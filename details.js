@@ -1,7 +1,11 @@
 window.onload= ()=> {
  let countryName = getUrlParameter()
   fetchCountry(countryName)
+
+
 }
+
+  
 function getUrlParameter() {
   let params = (new URL(document.location)).searchParams;
 const countryName = params.get('name');
@@ -12,30 +16,28 @@ divheader.appendChild (header);
 return countryName
 }
 
-const fetchCountry =(countryName)=> {
+const fetchCountry = (countryName) => {
+
   console.log('countryName :>> ', countryName);
    fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
-.then((res) => res.json())
-.then((res) => {
+  .then((res) => res.json())
+  .then((res) => {
   const fetchedCountry = res[0];
-  console.log('fetchedCountry :>> ', fetchedCountry);
-   armarTabla(fetchedCountry)
-
+    armarTabla(fetchedCountry)
+    addEvents();
 })
-.catch((err) => console.log(err));
+  .catch((err) => console.log(err));
+ }
 
-}
-
-
-const armarTabla = (country)=> {
+const armarTabla = (country) => {
   console.log('country :>> ', country);
   const title = document.getElementById("title");
-  title.innerHTML = (`Details about ${country.name.common}`)
+  title.innerHTML = (`Weather for ${country.name.common}`)
   const divheader = document.getElementById("countryname-div")
   const header = document.getElementById("countryname");
   header.setAttribute("text-align", "center")
   header.innerHTML = country.name.official;
-  divheader.appendChild (header);
+  divheader.appendChild(header);
   const imgdiv = document.getElementById("flag-div")
   const flagImg = document.createElement("img");
   flagImg.setAttribute("src", country.flags.png);
@@ -53,7 +55,7 @@ const armarTabla = (country)=> {
 
   const capital = document.createElement("td");
   capital.innerHTML = country.capital;
-   const language = document.createElement("td");
+  const language = document.createElement("td");
   language.innerHTML = country.demonyms.eng.m;
   const population = document.createElement("td");
   population.innerHTML = country.population;
@@ -65,18 +67,8 @@ const armarTabla = (country)=> {
   subregion.innerHTML = country.subregion;
   row.append(capital, language, population, timezone, region, subregion);
   getWeatherByCity(capital);
-  // const maindiv = document.getElementById("main-div");                                    tryed to put a googlemap, but didn't work, cause the API isn't good made...
-  // const map = document.createElement("iframe");
-  // const lati = country.latlng[0];
-  // const longi = country.latlng[1];
-  // console.log('lati :>> ', lati);
-  // console.log('longi :>> ', longi);
-  // const url = "https://www.google.com/maps?q=" + lati + "," + longi + "&hl=es-PY&gl=py&shorturl=1";
-  // map.setAttribute("src",url );
-  // console.log('url :>> ', url);
-  // maindiv.append(map);
-  }
 
+}
 
 const getWeatherByCity = (city) => {
   // hide spinner
@@ -88,27 +80,18 @@ const getWeatherByCity = (city) => {
 
   setTimeout(() => {
     const capital = city.innerText;
-    let urlAstronomy = `http://api.weatherapi.com/v1/astronomy.json?key=${API_KEY}&q=${capital}&dt=${new Date()}`;
-    let urlForecast = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${capital}&days=5&aqi=no&alerts=no`;
-    let urlsArray = [urlAstronomy, urlForecast];
-
-    Promise.all(
-      urlsArray.map((singleUrl) => {
-        return fetch(singleUrl).then((singleResponse) => {
+    let urlForecast = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${capital}&days=7&aqi=no&alerts=no`;
+    fetch(urlForecast).then((singleResponse) => {
           return singleResponse.json();
-        });
-      })
-    ).then((result) => {
-      console.log("result", result);
-      const astronomyData = result[0];
-      const weatherData = result[1];
-      displayData(weatherData, astronomyData);
-      // addEvents();
-    });
+          }).then((result) => {
+          console.log("result", result);
+          const weatherData = result;
+          displayData(weatherData);
+     });
   }, 1000);
 };
 
-const displayData = (weatherData, astronomyData) => {
+const displayData = (weatherData) => {
   // hide spinner
   const spinner = document.getElementById("spinner");
   spinner.classList.add("invisible");
@@ -118,17 +101,15 @@ const displayData = (weatherData, astronomyData) => {
 
   const city = document.getElementById("city");
   const tbody = document.getElementById("weather-data");
-  const astronomyCards = document.getElementById("astronomy-cards");
+
 
   // cleanDOM(city, tbody, astronomyCards);
 
   const { forecast, location } = weatherData;
 
-  city.innerText = `Weather for ${location.name} in ${location.country}, for the next 5 days...`;
-  const { astronomy } = astronomyData;
-
-  // createAstronomyCards(astronomyCards, astronomy);
+  city.innerText = `Weather for ${location.name} in ${location.country}, for the next week...`;
   createTable(tbody, forecast);
+     addEvents();
 };
 
 const createTable = (tbody, forecast) => {
@@ -169,33 +150,34 @@ const createTable = (tbody, forecast) => {
 };
 
 
-const cleanDOM = (city, tbody, astronomyCards) => {
-  city.innerHTML = "";
-  tbody.innerHTML = "";
-  astronomyCards.innerHTML = "";
-  document.getElementById("city-search").value = "";
-};
-
-
+// const cleanDOM = (city, tbody, astronomyCards) => {
+//   city.innerHTML = "";
+//   tbody.innerHTML = "";
+//   astronomyCards.innerHTML = "";
+//   document.getElementById("buscador").value = "";
+// };
 
 
 //BUSCAR A TRAPES DEL INPUT TEXT
 
-// const addEvents = () => {
-//   let city = "";
-//   const searchInput = document.getElementById("buscador");
-//   searchInput.addEventListener("input", (event) => {
-//     city = event.target.value;
-//     console.log("city", city);
-//   });
-//   searchInput.addEventListener("keydown", (event) => {
-//     console.log("key event", event);
-//     if (event.key === "Enter") {
-//       console.log("do something");
-//       console.log('city :>> ', city);
-//       fetchCountry(city);
-//       armarTabla(city);
-//       getWeatherByCity(city);
-//     }
-//   });
-// };
+const addEvents = () => {
+  let country = "";
+  const searchInput = document.getElementById("buscador");
+  searchInput.addEventListener("input", (event) => {
+    country = event.target.value;
+    console.log("country", country);
+  });
+
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      fetchCountry(event.target.value);
+    }
+  });
+
+  const searchInputbutton = document.getElementById("buscadorbutton")
+    searchInputbutton.addEventListener("click", (event) => {
+           fetchCountry(country);
+   
+   
+  });
+};

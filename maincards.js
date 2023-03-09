@@ -3,13 +3,12 @@
 function getCountries () {
     fetch("https://restcountries.com/v3.1/all")
     .then(function(response) {
-      console.log("response: ", response);
       return response.json();
     })
     .then(function(result) {
-      console.log("result: ", result);
-      CreateCards(result);
-        addEventListeners(result);
+       CreateCards(result);
+      addEventListeners(result);
+      addEvents();
     })
     .catch(function(error) {
       console.log(error)
@@ -26,13 +25,13 @@ function CreateCards(array) {
 
         const card = document.createElement("div");
         cardsDiv.classList.add("col", "row-cols-1", "row-cols-md-3", "g-4")
-        card.classList.add("card", "col-lg");
-        card.setAttribute("style", "width: 13rem;");
+        card.classList.add("card", "col-lg", "shadow");
+        card.setAttribute("style", "width: 13rem; border-radius: 120px; text-align:center");
         cardsDiv.appendChild(card);
         const img = document.createElement("img");
         img.setAttribute("src", array[i].flags.png);
         img.setAttribute("alt", array[i].flags.alt);
-        img.setAttribute("style", "card-img-top");
+       img.setAttribute("style", "card-img-top");
         const cardBody = document.createElement("div");
         cardBody.classList.add("card-body");
         card.append(img, cardBody);
@@ -46,35 +45,42 @@ function CreateCards(array) {
         const button = document.createElement("button");
         button.classList.add ("btn-primary");
         button.classList.add ("btn");
-        button.innerHTML = "Show More";
+        button.innerHTML = "More";
         cardBody.append(button);
 
 
         button.addEventListener("click", function(e) {
             // e.stopPropagation();
    
-            if ( button.innerHTML === "Show More" ) {
+            if ( button.innerHTML === "More" ) {
                 const list = document.createElement ("ul");
-                const cardlenguage = document.createElement("li");
+                const cardpopu = document.createElement("li");
                 const cardpop = document.createElement("li");
-                cardlenguage.innerHTML = array[i].language;
+                cardpopu.innerHTML = "Population";
               
                 cardpop.innerHTML = array[i].population;
                 list.classlist = ("list-group list-group-flush");
-                cardlenguage.classList = ("list-group-item");
+                cardpopu.classList = ("list-group-item");
                 cardpop.classList = ("list-group-item");
-                cardlenguage.id =("cardlang");
-                cardpop.id =("cardpopo");
-                cardBody.append (cardlenguage, cardpop);
-                button.innerHTML = "Show Less";
+                cardpopu.id =("cardlang");
+                cardpop.id = ("cardpopo");
+             
+                const link = document.createElement("a");
+                link.setAttribute("href", `details.html?name=${array[i].name.common}`);
+                link.innerHTML = "weather...";
+              link.id = ("linki");
+                cardBody.append (cardpopu, cardpop, link);
+                button.innerHTML = "Less";
                               
             } else  {
                 const cardlenguages = document.getElementById ("cardlang");
-                const cardpopi = document.getElementById ("cardpopo");
+              const cardpopi = document.getElementById("cardpopo");
+                const link = document.getElementById("linki");
                 cardlenguages.innerHTML = "";
                 cardpopi.innerHTML = "";
-                cardBody.append (cardlenguages, cardpopi);
-                button.innerHTML = "Show More";
+                link.textContent= "";
+                cardBody.append (cardlenguages, cardpopi, link);
+                button.innerHTML = "More";
                         
             }
           });
@@ -83,48 +89,20 @@ function CreateCards(array) {
   
 
 const addEventListeners = (countries) => {
-  // const subregionsOptions = document.getElementById("subregions");
-
-  // subregionsOptions.addEventListener("change", (e) => {
-  //   // console.log("region", e.target.value);
-  //   // filterBySubregion(countries);
-  //   // combinedFilters(countries);
-  //   displayTable(countries);
-  // });
-
-  // const regionsOptions = document.getElementById("regions");
-
-  // regionsOptions.addEventListener("change", (e) => {
-  //   // console.log("subregion", e.target.value);
-  //   // filterByRegion(countries);
-  //   // combinedFilters(countries);
-  //   displayTable(countries);
-  // });
-
   const checkBoxes = document.querySelectorAll("input[type='checkbox']");
-  console.log("checkBoxes", checkBoxes);
-
   checkBoxes.forEach((checkbox) => {
     checkbox.addEventListener("click", () => {
-      // console.log("working")
-      // combinedFilters(countries);
-
-      filterByCheckbox(countries)
+         filterByCheckbox(countries)
     });
   });
 };
 
-
-
 const filterByCheckbox = (countries) => {
   const checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
-
-  console.log("checkboxes inside FilterFunc", checkboxes);
-
   const checkboxesValues = Array.from(checkboxes).map((checkbox) => {
     return checkbox.value;
   });
-  console.log("checkboxesValues", checkboxesValues);
+
 
   const filteredCountries = countries.filter((country) => {
     return (
@@ -132,7 +110,7 @@ const filterByCheckbox = (countries) => {
       checkboxesValues.length === 0
     );
   });
-  console.log('filteredCountries :>> ', filteredCountries);
+
   CreateCards(filteredCountries);
 };
 
@@ -143,3 +121,45 @@ const filterByCheckbox = (countries) => {
 //   astronomyCards.innerHTML = "";
 //   document.getElementById("city-search").value = "";
 // };
+
+
+//BUSCAR A TRAVES DEL INPUT TEXT
+
+const addEvents = () => {
+  let country = "";
+
+  const searchInput = document.getElementById("buscador");
+  searchInput.addEventListener("input", (event) => {
+    country = event.target.value;
+
+  });
+  searchInput.addEventListener("keydown", (event) => {
+    console.log("key event", event);
+    if (event.key === "Enter") {
+      fetchCountry(country);
+      // window.location.href = `details.html?name=${country}`
+
+    }
+  });
+    const buttonsearch = document.getElementById("searchbutton")
+    buttonsearch.addEventListener("click", (event) => {
+      fetchCountry(country);
+
+          // window.location.href = `details.html?name=${country}`
+
+  });
+};
+
+const fetchCountry =(countryName)=> {
+  console.log('countryName :>> ', countryName);
+   fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
+  .then((res) => res.json())
+  .then((res) => {
+  const fetchedCountry = res[0];
+  console.log('fetchedCountry :>> ', fetchedCountry);
+  
+  CreateCards(fetchedCountry);
+})
+.catch((err) => console.log(err));
+
+}

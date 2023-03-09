@@ -1,23 +1,19 @@
-
-img {
+ img {
+  height: 3rem;
+  width:auto;
+}
+#weather-data img{
   height: 4rem;
+    width: auto;
+}
+
+#cards-container img {
+  height: 6rem;
   width: auto;
 }
-/* 
-div{
-    padding: 2em;
-    width: auto;
-    text-align: center;
-   }
-body{
-border-top: 0;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-} */
-
 #cards-container {
    /* margin-top: 5vw; */
+  
   column-gap: 1rem;
   row-gap: 2rem;
   overflow: hidden;
@@ -27,15 +23,6 @@ border-top: 0;
   grid-template-columns: auto auto auto auto;
   grid-template-rows: auto;
 }
-
-/* #cards-container div{
-  border-top: 5rem;
-
-  border: solid 1px gray;
-  overflow: hidden;
-  border-radius: 8px;
-  gap: 2rem;
-} */
 
 #region{
   /* padding-top: 7.5rem; */
@@ -60,8 +47,6 @@ grid-template-columns: 25% 50% 25%;
 grid-template-areas: "header header header"
 "main main main"
 "footer footer footer";
-/* gap: 2rem; */
-border: solid 1px white;
 position: absolute;
 padding: 5px;
 width: 100%;
@@ -69,10 +54,12 @@ height: 100%;
 
 }
 #flag-div{
+justify-self: center;
   grid-row: 1;
   grid-column: 1;
 }
 #escudo-div{
+  justify-self: center;
   grid-row: 1;
   grid-column: 3;
 }
@@ -86,21 +73,42 @@ height: 100%;
 }
 #header-div {
   grid-area: header;
-
+justify-content: center;
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
   gap: 2%;
 
 }
-#countryname-div h1{
-padding-top: 2rem;
+#countryname-div {
+  justify-content:space-around;
+padding: 3rem;
+display: block;
 }
 #main-div {
   grid-area: main;
-  /* border: solid 1px white; */
 }
 #footer-div {
   grid-area: footer;
-  /* border: solid 1px white; */
 }
+
+@media screen and (max-width: 1000px) {
+    #cards-container {
+        display: grid;
+        /*MEDIA QUERY FOR PRODUCT PAGE; BETWEEN 700px AND 1300px*/
+        grid-template-columns:auto auto auto;
+       gap: 10px 10px;
+        margin: 2%;
+      }
+  }
+
+@media screen and (max-width: 575.98px) {
+#cards-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        /*MEDIA QUERY FOR PRODUCT PAGE; UNDER 700px */
+        gap: 10px 10px;
+        margin: 2%;
+        display: block;
+      }
+ }
