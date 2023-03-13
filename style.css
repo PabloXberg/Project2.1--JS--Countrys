@@ -12,8 +12,6 @@
   width: auto;
 }
 #cards-container {
-   /* margin-top: 5vw; */
-  
   column-gap: 1rem;
   row-gap: 2rem;
   overflow: hidden;
@@ -23,9 +21,7 @@
   grid-template-columns: auto auto auto auto;
   grid-template-rows: auto;
 }
-
 #region{
-  /* padding-top: 7.5rem; */
   width: 100%;
   text-align: center;
 }
@@ -54,26 +50,29 @@ height: 100%;
 
 }
 #flag-div{
-justify-self: center;
   grid-row: 1;
+  display: grid;
+    place-items: center;
   grid-column: 1;
 }
 #escudo-div{
   justify-self: center;
   grid-row: 1;
   grid-column: 3;
+  display: grid;
+  place-items: center;
 }
 #escudo-div img{
-  width: 13rem;
-  height: 10rem;
+  width: 11.5rem;
+    height: 11.5rem;
 }
 #flag-div img{
-  width: 13rem;
-  height: 10rem;
+  width: 18rem;
+    height: 11.5rem;
 }
 #header-div {
   grid-area: header;
-justify-content: center;
+
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
@@ -81,9 +80,8 @@ justify-content: center;
 
 }
 #countryname-div {
-  justify-content:space-around;
-padding: 3rem;
-display: block;
+display: grid;
+place-items: center;
 }
 #main-div {
   grid-area: main;

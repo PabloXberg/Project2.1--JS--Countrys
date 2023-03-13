@@ -1,8 +1,6 @@
 window.onload= ()=> {
  let countryName = getUrlParameter()
   fetchCountry(countryName)
-
-
 }
 
   
@@ -30,30 +28,24 @@ const fetchCountry = (countryName) => {
  }
 
 const armarTabla = (country) => {
-  console.log('country :>> ', country);
   const title = document.getElementById("title");
-  title.innerHTML = (`Weather for ${country.name.common}`)
   const divheader = document.getElementById("countryname-div")
   const header = document.getElementById("countryname");
   header.setAttribute("text-align", "center")
-  header.innerHTML = country.name.official;
-  divheader.appendChild(header);
   const imgdiv = document.getElementById("flag-div")
   const flagImg = document.createElement("img");
-  flagImg.setAttribute("src", country.flags.png);
-  flagImg.setAttribute("alt", country.flags.alt);
   const escdiv = document.getElementById("escudo-div")
   const escImg = document.createElement("img");
-  escImg.setAttribute("src", country.coatOfArms.png);
-  escImg.setAttribute("alt", country.coatOfArms.alt);
-  imgdiv.append(flagImg);
-  escdiv.append(escImg);
   const table = document.getElementById("details-table");
-
   const row = document.createElement("tr");
-  table.appendChild(row);
-
-  const capital = document.createElement("td");
+  row.id = "datarow"
+  title.innerHTML = (`Weather for ${country.name.common}`)
+   header.innerHTML = country.name.official;
+    flagImg.setAttribute("src", country.flags.png);
+  flagImg.setAttribute("alt", country.flags.alt);
+   escImg.setAttribute("src", country.coatOfArms.png);
+  escImg.setAttribute("alt", country.coatOfArms.alt);
+   const capital = document.createElement("td");
   capital.innerHTML = country.capital;
   const language = document.createElement("td");
   language.innerHTML = country.demonyms.eng.m;
@@ -65,6 +57,10 @@ const armarTabla = (country) => {
   region.innerHTML = country.region;
   const subregion = document.createElement("td");
   subregion.innerHTML = country.subregion;
+  table.appendChild(row);
+  divheader.appendChild(header);
+  imgdiv.append(flagImg);
+  escdiv.append(escImg);
   row.append(capital, language, population, timezone, region, subregion);
   getWeatherByCity(capital);
 
@@ -84,7 +80,6 @@ const getWeatherByCity = (city) => {
     fetch(urlForecast).then((singleResponse) => {
           return singleResponse.json();
           }).then((result) => {
-          console.log("result", result);
           const weatherData = result;
           displayData(weatherData);
      });
@@ -101,20 +96,18 @@ const displayData = (weatherData) => {
 
   const city = document.getElementById("city");
   const tbody = document.getElementById("weather-data");
-
-
-  // cleanDOM(city, tbody, astronomyCards);
-
   const { forecast, location } = weatherData;
 
   city.innerText = `Weather for ${location.name} in ${location.country}, for the next week...`;
   createTable(tbody, forecast);
-     addEvents();
+   
 };
 
 const createTable = (tbody, forecast) => {
   forecast.forecastday.forEach((day) => {
+    
     const row = document.createElement("tr");
+    row.id = "weatherrow"
     const td1 = document.createElement("td");
     const td2 = document.createElement("td");
     const td3 = document.createElement("td");
@@ -150,34 +143,33 @@ const createTable = (tbody, forecast) => {
 };
 
 
-// const cleanDOM = (city, tbody, astronomyCards) => {
-//   city.innerHTML = "";
-//   tbody.innerHTML = "";
-//   astronomyCards.innerHTML = "";
-//   document.getElementById("buscador").value = "";
-// };
+const cleanDOM = () => {
 
+  document.getElementById("buscador").value = "";
+  document.querySelectorAll("img").innerHTML = "";
+  document.getElementById("datarow").innerText  = "";
+  document.getElementById("flag-div").innerText  = "";
+  document.getElementById("escudo-div").innerText = "";
+  document.getElementById("weather-data").innerText  = "";
+  document.getElementById("city").innerText  = "";
+
+};
 
 //BUSCAR A TRAPES DEL INPUT TEXT
 
 const addEvents = () => {
   let country = "";
   const searchInput = document.getElementById("buscador");
-  searchInput.addEventListener("input", (event) => {
+  searchInput.addEventListener("change", (event) => {
     country = event.target.value;
-    console.log("country", country);
+
   });
 
   searchInput.addEventListener("keydown", (event) => {
+    event.preventDefault()
     if (event.key === "Enter") {
-      fetchCountry(event.target.value);
-    }
-  });
-
-  const searchInputbutton = document.getElementById("buscadorbutton")
-    searchInputbutton.addEventListener("click", (event) => {
-           fetchCountry(country);
-   
-   
+      cleanDOM();
+      fetchCountry(country);
+     }
   });
 };

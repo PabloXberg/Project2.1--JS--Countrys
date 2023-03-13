@@ -25,13 +25,13 @@ function CreateCards(array) {
 
         const card = document.createElement("div");
         cardsDiv.classList.add("col", "row-cols-1", "row-cols-md-3", "g-4")
-        card.classList.add("card", "col-lg", "shadow");
+        card.classList.add("card", "col-lg");
         card.setAttribute("style", "width: 13rem; border-radius: 120px; text-align:center");
         cardsDiv.appendChild(card);
         const img = document.createElement("img");
         img.setAttribute("src", array[i].flags.png);
         img.setAttribute("alt", array[i].flags.alt);
-       img.setAttribute("style", "card-img-top");
+        img.setAttribute("style", "card-img-top");
         const cardBody = document.createElement("div");
         cardBody.classList.add("card-body");
         card.append(img, cardBody);
@@ -43,7 +43,7 @@ function CreateCards(array) {
         cardcapital.innerHTML = array[i].capital;
         cardBody.append(title, cardcapital);
         const button = document.createElement("button");
-        button.classList.add ("btn-primary");
+        button.classList.add ("btn-success");
         button.classList.add ("btn");
         button.innerHTML = "More";
         cardBody.append(button);
@@ -54,22 +54,24 @@ function CreateCards(array) {
    
             if ( button.innerHTML === "More" ) {
                 const list = document.createElement ("ul");
-                const cardpopu = document.createElement("li");
+                const cardlenguage = document.createElement("li");
                 const cardpop = document.createElement("li");
-                cardpopu.innerHTML = "Population";
+                cardlenguage.innerHTML = "Population";
               
                 cardpop.innerHTML = array[i].population;
                 list.classlist = ("list-group list-group-flush");
-                cardpopu.classList = ("list-group-item");
+                cardlenguage.classList = ("list-group-item");
                 cardpop.classList = ("list-group-item");
-                cardpopu.id =("cardlang");
+                cardlenguage.id =("cardlang");
                 cardpop.id = ("cardpopo");
              
                 const link = document.createElement("a");
                 link.setAttribute("href", `details.html?name=${array[i].name.common}`);
-                link.innerHTML = "weather...";
-              link.id = ("linki");
-                cardBody.append (cardpopu, cardpop, link);
+                link.innerHTML = "see more..";
+                link.id = ("linki");
+                button.classList.remove("btn-success");
+               button.classList.add ("btn-danger");
+                cardBody.append (cardlenguage, cardpop, link);
                 button.innerHTML = "Less";
                               
             } else  {
@@ -78,7 +80,9 @@ function CreateCards(array) {
                 const link = document.getElementById("linki");
                 cardlenguages.innerHTML = "";
                 cardpopi.innerHTML = "";
-                link.textContent= "";
+              link.textContent = "";
+              button.classList.remove("btn-danger");
+                button.classList.add ("btn-success");
                 cardBody.append (cardlenguages, cardpopi, link);
                 button.innerHTML = "More";
                         
